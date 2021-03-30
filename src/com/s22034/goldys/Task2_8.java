@@ -8,28 +8,30 @@ public class Task2_8 {
     {
         IterNap napis = new IterNap("prOgrAmoWanIe ObiEktOwe i Gui");
 
-        // iteracja po znakach napisu,
-        // domyślnie zaczynając od pierwszego znaku (o indeksie 0)
-        // i z krokiem iteracji = 1
         for (char z: napis)
             System.out.print(z + " ");
 
         System.out.println();
 
-        napis.ustawPoczatek(2);     // ustawienie początku iteracji (tu: 2-gi znak, o indeksie 2)
-        napis.ustawKrok(3);         // ustawienie kroku iteracji (tu: co 3-ci znak)
+        napis.ustawPoczatek(2);
+        napis.ustawKrok(3);
 
-        // iteracja po znakach napisu,
-        // od ustalonego znaku, z określonym krokiem
         for (char z: napis)
             System.out.print(z + " ");
 
+        System.out.println(
+                "\n==forEach=="
+        );
 
-	/*<-  co tu trzeba napisać w wywołaniu metody forEach z argumentem będącym lambda-wyrażeniem
-	      w celu wyświetlenia znaków napisu (w postaci małych liter) zgodnie z iteracją
+        napis.ustawPoczatek(2);
+        napis.ustawKrok(3);
 
-	napis.forEach(...)
-	*/
+        napis.forEach( c -> {
+                    System.out.print(
+                            c.toString().toLowerCase()
+                    );
+                }
+        );
     }
 }
 
@@ -45,8 +47,8 @@ class IterNap implements Iterable<Character>{
     }
 
 
-    public void ustawPoczatek(int poczatek) {
-        this.pozycja = poczatek;
+    public void ustawPoczatek(int pozycja) {
+        this.pozycja = pozycja;
     }
 
 
@@ -55,10 +57,10 @@ class IterNap implements Iterable<Character>{
     }
 
     public Iterator<Character> iterator(){
-        return new Iterator<Character>() {
+        return new Iterator<>() {
             @Override
             public boolean hasNext() {
-                if(napis.length() > (pozycja+krok)){
+                if(napis.length() >= (pozycja+krok)){
                     return true;
                 }
                 return false;
@@ -69,13 +71,7 @@ class IterNap implements Iterable<Character>{
                 int temp = pozycja;
                 pozycja = temp+krok;
                 return napis.charAt(temp);
-
             }
         };
-    }
-
-    @Override
-    public String toString() {
-        return napis;
     }
 }
